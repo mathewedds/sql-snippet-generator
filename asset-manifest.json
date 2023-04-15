@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/sql-snippet-generator/static/css/main.80cadd00.css",
+    "main.js": "/sql-snippet-generator/static/js/main.82074838.js",
+    "static/js/787.b4508cf5.chunk.js": "/sql-snippet-generator/static/js/787.b4508cf5.chunk.js",
+    "index.html": "/sql-snippet-generator/index.html",
+    "main.80cadd00.css.map": "/sql-snippet-generator/static/css/main.80cadd00.css.map",
+    "main.82074838.js.map": "/sql-snippet-generator/static/js/main.82074838.js.map",
+    "787.b4508cf5.chunk.js.map": "/sql-snippet-generator/static/js/787.b4508cf5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.80cadd00.css",
+    "static/js/main.82074838.js"
+  ]
+}
