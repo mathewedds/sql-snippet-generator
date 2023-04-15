@@ -57,6 +57,3 @@ Once a variable has been created via the methods above, you are free to referenc
 There are 2 ways that you can export a snippet.
 
 First of which is copying the snippet code for use elsewhere and the second method is using the "Save Snippet" button to download as a .snippet file. If you have created a title, that will be used as the file name.
-
-## Video Demo
-https://www.youtube.com/watch?v=OE6iZ1Y0vS8
