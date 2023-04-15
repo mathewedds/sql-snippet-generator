@@ -6,7 +6,7 @@
     Create reusable SSMS SQL snippets efficiently!
     <br/>
     <br/>
-    <a href="https://github.com/mathewedds/sql-snippet-generator">View App</a>
+    <a href="https://mathewedds.github.io/sql-snippet-generator/">View App</a>
   </p>
 </p>
 
