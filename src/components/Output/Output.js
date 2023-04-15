@@ -15,11 +15,13 @@ class Output extends Component {
   }
 
   handleClick() {
+    // on click, select the entire output sql snippet text
     const textarea = document.getElementById("sqlOutput");
     textarea.select();
   }
 
   handleCopy() {
+    // on copy, select the output sql snippet text and copy to clipboard
     let textarea = document.getElementById("sqlOutput");
     textarea.select();
     navigator.clipboard.writeText(textarea.value);
@@ -33,8 +35,10 @@ class Output extends Component {
     const blob = new Blob([fileData], {type: "text/plain"});
     const url = URL.createObjectURL(blob);
 
+    // use title from input if exists or default to preset
     const title = this.props.title !== '' ? this.props.title : "generated-sql-snippet";
 
+    // open download link
     const link = document.createElement("a");
     link.download = `${title}.snippet`;
     link.href = url;

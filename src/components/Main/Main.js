@@ -28,18 +28,23 @@ class Main extends Component {
   }
 
   componentDidMount() {
+    // construct snippet code on initialisation
     this.constructSnippet();
   }
 
   handleValueChange(name, value) {
+    // on each input, check if it's a variable edit using the state value selectedVar for the last inserted variable
     const inputTextArea = document.getElementById("sqlInput");
     const startPos = inputTextArea.selectionStart;
     const endPos = inputTextArea.selectionEnd;
+
+    // variable edits are true if the variable has just been created and the text selected is in between 2 '$' chars
     let isVariableEdit = startPos > this.state.selectedStart && inputTextArea.value[endPos] === '$';
 
     let newVars = this.state.variables;
     let selectedVar = this.state.selectedVar;
     
+    // if it is a variable edit and the variable exists in state, update the id on each input
     if (isVariableEdit && selectedVar !== '' && newVars.some(x => x.id === this.state.selectedVar)) {
       const newId = inputTextArea.value.substring(this.state.selectedStart + 1, endPos);
       newVars.find(x => x.id === this.state.selectedVar).id = newId;
@@ -53,6 +58,7 @@ class Main extends Component {
       variables: newVars,
       selectedVar: selectedVar
     }, () => {
+      // variable edits reconstruct the snippet, if it's not check if the variables still exist in input
       if (isVariableEdit) {
         this.constructSnippet();
       } else {
@@ -61,20 +67,23 @@ class Main extends Component {
     });
   }
 
-  handleAddVariable() {
+  handleAddVariable(id) {
+    // create new var, if text that was highlighted is a valid id, use it.
     const newVar = {
-      id: `variable-${this.state.variables.length + 1}`,
+      id: id !== "" ? id :`variable-${this.state.variables.length + 1}`,
       default: 'value',
       order: this.state.variables.length + 1
     };
 
+    // get the current sqlInput text
     const inputTextArea = document.getElementById("sqlInput");
 
     const inputPos = inputTextArea.selectionStart;
     const currVal = this.state.sqlInput;
     const newVarLabel = `$${newVar.id}$`;
 
-    const newVal = currVal.slice(0, inputPos) + newVarLabel + currVal.slice(inputPos);
+    // new variable will be placed at the cursor start pos
+    const newVal = currVal.slice(0, inputPos) + newVarLabel + currVal.slice(inputTextArea.selectionEnd);
 
     // set selection of new variable
     const testStart = newVal.indexOf(newVar.id);
@@ -85,12 +94,14 @@ class Main extends Component {
       selectedVar: newVar.id,
       selectedStart: testStart - 1
     }, () => {
+      // construct snippet code first
       this.constructSnippet();
       
       // set selection of new variable
       const startPos = this.state.sqlInput.indexOf(newVar.id);
       const endPos = startPos + newVar.id.length;
   
+      // select the variable's text within the 2 '$' chars
       inputTextArea.focus();
       inputTextArea.selectionStart = startPos;
       inputTextArea.selectionEnd = endPos;
@@ -104,6 +115,7 @@ class Main extends Component {
     let newVars = this.state.variables;
     let sqlInput = this.state.sqlInput;
 
+    // on edit, find the variable edited and update the values in both variable and sqlInput state values.
     newVars.forEach(v => {
       if (v.id === id) {
         v[propChanged] = value;
@@ -118,15 +130,18 @@ class Main extends Component {
       variables: newVars,
       sqlInput: sqlInput
     }, () => {
+      // reconstruct snippet code
       this.constructSnippet();
     })
   }
 
   handleVariableDeleted(id) {
+    // remove variable from state variables and sqlInput
     this.setState({
       variables: this.state.variables.filter(x => x.id !== id),
       sqlInput: this.state.sqlInput.split(`$${id}$`).join('')
     }, () => {
+      // reconstruct snippet code
       this.constructSnippet();
     })
 
@@ -134,11 +149,12 @@ class Main extends Component {
   }
 
   handleSendToastMessage(message) {
+    // propagate messages to display in toast component
     this.props.onToastMessageUpdate(message);
   }
 
   updateVariables() {
-    // check if variables still exist in sqlInput
+    // check if variables still exist in sqlInput, remove if they do not
     let newVars = this.state.variables;
     this.state.variables.forEach((v, ix) => {
       if (this.state.sqlInput.indexOf(v.id) === -1) {
@@ -149,6 +165,7 @@ class Main extends Component {
     this.setState({
       variables: newVars
     }, () => {
+      // reconstruct snippet code
       this.constructSnippet();
     });
   }
@@ -161,6 +178,7 @@ class Main extends Component {
     const sqlInput = this.state.sqlInput;
     const variableSnippet = this.constructVariables();
 
+    // sets the snippet code that is displayed on output
     this.setState({ sqlOutput: 
       `<?xml version="1.0" encoding="utf-8"?>
 <CodeSnippets>
@@ -177,11 +195,7 @@ class Main extends Component {
     <Snippet>
     <Declarations>${variableSnippet}
     </Declarations>
-    <Code Language="sql"><![CDATA[
-
-${sqlInput}
-
-]]></Code>
+    <Code Language="sql"><![CDATA[${sqlInput}]]></Code>
     </Snippet>
   </CodeSnippet>
 </CodeSnippets>`
@@ -191,6 +205,7 @@ ${sqlInput}
   constructVariables() {
     let variableSnippet = '';
 
+    // create snippet code for each current variable
     this.state.variables.forEach(v => {
       variableSnippet += `
       <Literal>

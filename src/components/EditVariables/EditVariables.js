@@ -14,31 +14,26 @@ class EditVariables extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleClose = this.handleClose.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
   }
 
-  handleClose() {
+  handleShow(isShow) {
+    // hide/show edit variables modal
     this.setState({
-      show: false
-    });
-  };
-
-  handleShow() {
-    this.setState({
-      show: true
+      show: isShow
     });
   };
 
   handleKeyDown(event) {
+    // if user's key input is enter or escape, blur the current inline input
     if (event.key === "Enter" || event.key === "Escape")
       event.target.blur();
   }
 
   handleChange(event, id) {
+    // on change of any variable
     const propChanged = event.target.name;
     const value = event.target.value;
 
@@ -50,12 +45,14 @@ class EditVariables extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    // if all the variables have been removed, close the edit variables modal
     if (prevProps.variables.length > 0 && this.props.variables.length <= 0) {
-      this.handleClose();
+      this.handleShow(false);
     }
   }
 
   render() {
+    // construct the inline display of the variables
     const getVariableRows = this.props.variables.map(variable => (
       <tr key={variable.order}>
         <td>
@@ -91,13 +88,13 @@ class EditVariables extends Component {
         className="button full-width" 
         type="button" 
         disabled={this.props.variables.length === 0} 
-        onClick={this.handleShow}>
+        onClick={() => this.handleShow(true)}>
           Edit Variables
         </button>
   
         <Modal
           show={this.state.show}
-          onHide={this.handleClose}
+          onHide={() => this.handleShow(false)}
           backdrop="static"
           keyboard={false}
           size="lg"
@@ -120,7 +117,7 @@ class EditVariables extends Component {
           </Table>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={this.handleClose}>Close</Button>
+            <Button variant="primary" onClick={() => this.handleShow(false)}>Close</Button>
           </Modal.Footer>
         </Modal>
       </>

@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+<br/>
+<p align="center">
+  <h3 align="center">SQL Snippet Generator</h3>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+  <p align="center">
+    Create reusable SSMS SQL snippets efficiently!
+    <br/>
+    <br/>
+    <a href="https://github.com/mathewedds/sql-snippet-generator">View App</a>
+  </p>
+</p>
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
+## About The Project
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![Screen Shot](https://i.imgur.com/AgrCOXO.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+This React app helps generate T-SQL snippets for SQL Server Management Studio (SSMS) complete with metadata (title, author, description and snippet type) and variables.
 
-### `npm test`
+## Built With
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React.js
+- React Bootstrap
+- Font Awesome
 
-### `npm run build`
+## Snippet Metadata
+- <b>Title:</b> the title of your snippet, used as a file name on save
+- <b>Author:</b> author of the snippet
+- <b>Description:</b> brief description on snipptet functionality
+- <b>Snippet Type:</b> defined snippet types either "SurroundsWith" or "Expansion" (<a href="https://learn.microsoft.com/en-us/sql/ssms/scripting/transact-sql-code-snippets?view=sql-server-ver16">see more</a>)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Variables
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Creating a variable
+There are 2 ways to create a variable. The first is simply clicking the "Add Variable" button where a variable will be added at the cursor.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![](https://i.imgur.com/OaEi4OR.gif)
 
-### `npm run eject`
+The second way is by highlighting a portion of text within the input field that is a snippet identifier (i.e: begins and ends with '$') then pressing the "Add Variable" button.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![](https://i.imgur.com/XdCBG8r.gif)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Immediately after creating a variable, the variable will automatically be highlighted within the input field. Here, you can rename the variable and it will reflect in the generated snippet
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Editing a variable
+To edit a variable, click on the "Edit Variables" button where a modal will appear.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+You will see a list of the variables you've created and their default values. The variables within the table are inline editable, so you can click on the fields then update the values. Any change made within here is automatically reflected in the T-SQL input and the generated snippet code.
 
-## Learn More
+![Screen Shot](https://i.imgur.com/pGPGLTE.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Using a variable
+Once a variable has been created via the methods above, you are free to reference the variable throughout you T-SQL. If there are no references to your variable in the T-SQL input, it is automatically removed.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Exporting Snippet
+There are 2 ways that you can export a snippet.
 
-### Code Splitting
+First of which is copying the snippet code for use elsewhere and the second method is using the "Save Snippet" button to download as a .snippet file. If you have created a title, that will be used as the file name.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Video Demo
+https://www.youtube.com/watch?v=OE6iZ1Y0vS8

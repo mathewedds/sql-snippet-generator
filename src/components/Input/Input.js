@@ -8,17 +8,54 @@ class Input extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAddVariable = this.handleAddVariable.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
-  handleInputChange(event) {
-    const value = event.target.value;
+  handleInputChange(event, keyCode = null) {
+    // propagate what was updated and the new value
+    let value = event.target.value;
     const name = event.target.name;
+
+    const inputTextArea = document.getElementById("sqlInput");
+
+    // add indentation for tabbing
+    if (name === "sqlInput" && keyCode === 9) {
+      const start = inputTextArea.selectionStart;
+      const end = inputTextArea.selectionEnd;
+
+      value = value.slice(0, start) + "\t" + value.slice(end);
+
+      inputTextArea.selectionStart = inputTextArea.selectionEnd = start + 1;
+    }
+
+    // blur sqlInput on ESC
+    if (keyCode === 27) {
+      inputTextArea.blur();
+    }
 
     this.props.onValueChanged(name, value);
   }
 
   handleAddVariable() {
-    this.props.onVariableAdded();
+    let id = "";
+
+    // if a user selects text, add variable will consider the text selected
+    const currSelection = window.getSelection().toString();
+
+    // if selected text is a valid id, strip the first & last and use it.
+    if (currSelection.startsWith("$") && currSelection.endsWith("$")) {
+      id = currSelection.slice(1, -1);
+    }
+
+    this.props.onVariableAdded(id);
+  }
+
+  handleKeyDown(event) {
+    // indent for tab, escape for esc
+    if (event.keyCode === 9 || event.keyCode === 27) {
+      event.preventDefault();
+      this.handleInputChange(event, event.keyCode);
+    }
   }
 
   render() {
@@ -68,6 +105,7 @@ class Input extends Component {
             name="sqlInput"
             value={sqlInput}
             onChange={this.handleInputChange}
+            onKeyDown={this.handleKeyDown}
             />
             <button className="btn-variable" type="button" onClick={this.handleAddVariable}>Add Variable</button>
         </div>

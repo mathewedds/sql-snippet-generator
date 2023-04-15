@@ -20,8 +20,12 @@
   font-weight: 600
 }
 
-.header-text {
+.header-text, .a-source {
   color: #fff;
+}
+
+.a-source:hover {
+  color: #0092ca;
 }
 
 .toast {
@@ -104,7 +108,7 @@
   color: #666666;
 }
 
-.input-main, .output-main, .parameters-container, .main-field, .full-width {
+.input-main, .output-main, .main-field, .full-width {
   width: 100%;
 }
 
@@ -120,21 +124,6 @@
   height: 100%;
   resize: none;
   position: absolute;
-}
-
-.empty-field {
-  width: 100%;
-  padding: 30px;
-}
-
-.parameters-container {
-  border: #000 solid 1px;
-  height: 100%;
-  flex-grow: 1;
-}
-
-.parameter-table {
-  width: 100%;
 }
 
 .btn-variable {
